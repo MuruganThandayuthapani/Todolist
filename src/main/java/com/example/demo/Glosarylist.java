@@ -43,7 +43,11 @@ public class Glosarylist {
 	
 	@DeleteMapping("deleteItem/{del}")
 	public String delItem(@PathVariable String del) {
-		mList.remove(del);
+		
+		if(mList.contains(del)) {
+			mList.remove(del);
+		}
+		
 		return mList.toString();
 	
 	}
