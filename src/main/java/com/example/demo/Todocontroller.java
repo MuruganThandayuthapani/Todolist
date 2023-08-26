@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,13 +26,11 @@ public class Todocontroller {
 
 	@GetMapping("todolistbyid")
 	public String getTask(@RequestParam String ide) {
-		String res="";
-		if(list.contains(ide))
-		{
-			res= "Give data is available";
-		}
-		else {
-			res= "Give Not data is available";
+		String res = "";
+		if (list.contains(ide)) {
+			res = "Give data is available";
+		} else {
+			res = "Give Not data is available";
 		}
 		return res;
 	}
@@ -41,4 +41,34 @@ public class Todocontroller {
 		return "Sucessfull";
 	}
 
+	@DeleteMapping("todolistDelete/{Del}")
+	public String tododel(@PathVariable String Del) {
+		String result = "";
+		if (list.contains(Del)) {
+			list.remove(Del);
+			result = list.toString();
+		} else {
+			result = "Not available";
+		}
+		return result;
+	}
+	
+	@PutMapping("todoListUpdate")
+	public String toddoupdate(@RequestBody Updatetodo updatekey) {
+		
+		int indexOfVal=list.indexOf(updatekey.oldValue);
+		//list.remove(indexOfVal);
+		list.set(indexOfVal, updatekey.newValue);
+		
+		return list.toString();
+	}
+	
+
+}
+
+
+class Updatetodo{
+	 public String oldValue;
+	 public String newValue;
+	 
 }
